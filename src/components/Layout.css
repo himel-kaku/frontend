@@ -1,0 +1,147 @@
+.layout {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  height: 100vh;
+  background: #f2f4f3;
+
+  overflow: hidden;
+}
+
+.left-sidebar {
+  background: rgb(240, 245, 245);
+  padding: 12px;
+  border-right: 1px solid #fffefe;
+  box-shadow: 2px 5px 15px rgba(0, 0, 0, 0.08);
+}
+
+/* .profile-section {
+  text-align: center;
+} */
+
+
+
+.profile-section h3 {
+  margin: 0 0 4px;
+  color: #aa20f4;
+  font-size: 25px;
+  font-weight: 700;
+}
+
+.student-id {
+  color: #666;
+  font-size: 14px;
+  margin: 0 0 10px;
+}
+
+.website-title,
+.profile-details {
+  text-align: left;
+  background: white;
+  padding: 10px;
+  border-radius: 1px;
+
+  box-shadow: 1px 1px 1px rgb(142, 163, 154);
+}
+
+.website-title{
+  font-size: 15px;
+  font-weight: 750;
+  color: rgb(106, 106, 106);
+  margin-bottom: 20px;
+}
+
+.profile-details{
+   margin-bottom: 15px;
+}
+
+.profile-details p{
+  margin: 8px 0;
+  font-size: 14px;
+  color: rgb(132, 133, 133);
+}
+
+.cr-badge {
+  background: #c4c6c6;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 1px;
+  font-size: 12px;
+  font-weight: 600;
+  text-align: center;
+  margin-top: 10px !important;
+}
+
+
+.logout-btn {
+  width: 40%;
+  padding: 6px;
+  background: #6e6e6eb5;
+  color: white;
+  border: none;
+  border-radius: 1px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 700;
+  
+  box-shadow: 1px 1px 1px rgb(54, 54, 54);
+}
+
+.logout-btn:hover {
+  background: #b7b7b7;
+}
+
+.main-content {
+  padding: 20px;
+  overflow-y: auto;
+}
+
+
+.navigation {
+  border-top: 1.5px dashed rgb(197, 196, 196);
+  margin-top: 30px;
+  padding-top: 5px;
+}
+
+
+.navigation-bar{
+  height: 50vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* .navigation-title{
+  padding-top: 5px;
+  padding-bottom: 5px;
+  color: #333;
+  font-size: 16px;
+
+  box-shadow: 1px 1px 1px rgb(180, 180, 180);
+  margin-bottom: 2px;
+} */
+
+.navigation a {
+  display: block;
+  padding: 10px 15px;
+  margin-bottom: 8px;
+  color: #555;
+  font-weight: 650;
+  text-decoration: none;
+  border-radius: 1px;
+  transition: all 0.3s;
+  border-bottom: 1.5px dashed rgb(176, 176, 176);
+}
+
+.navigation a:hover {
+  background: #c9cccbb5;
+  font-weight: 650;
+  color: #787878;
+}
+
+.navigation a.active {
+  background: #9dc7c0;
+  color: rgb(255, 255, 255);
+  font-weight: 650;
+
+  box-shadow: 1px 1px 1px solid black;
+  margin-bottom: 2px;
+}

@@ -1,0 +1,98 @@
+.routine-container-fixed {
+  /* Fits your requirement: width: calc(100vw - 280px) and full height */
+  width: calc(100vw - 310px); 
+  height: 90vh;
+  background: #fff;
+  overflow: hidden; /* Removes both scrollbars */
+  display: flex;
+  flex-direction: column;
+  padding: 2px;
+  box-sizing: border-box;
+}
+
+.routine-grid {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #e0e0e0;
+}
+
+.grid-header, .grid-row {
+  display: grid;
+  /* Fixed width for Day column, fluid for Time columns */
+  grid-template-columns: 75px repeat(10, 1fr); 
+  flex: 1; /* Makes rows expand to fill container height */
+}
+
+.grid-header {
+  background-color: #f8f9fa;
+  font-size: 0.75rem;
+  max-height: 40px; /* Keeps header small */
+}
+
+.corner-label, .time-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  border-right: 1px solid #eee;
+  border-bottom: 2px solid #dee2e6;
+  text-align: center;
+}
+
+.date-cell {
+  background-color: #fcfcfc;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-right: 2px solid #dee2e6;
+  border-bottom: 1px solid #eee;
+}
+
+.day-name {
+  font-weight: 700;
+  font-size: 0.7rem;
+}
+
+.date-sub {
+  font-size: 0.6rem;
+  color: #999;
+}
+
+.routine-cell {
+  border-right: 1px solid #f0f0f0;
+  border-bottom: 1px solid #f0f0f0;
+  padding: 2px;
+  display: flex;
+  flex-direction: column;
+  min-width: 0; /* Prevents overflow in narrow grids */
+}
+
+.routine-block {
+  height: 100%;
+  border-radius: 3px;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.routine-block.theory { background-color: #4caf50; }
+.routine-block.sessional { background-color: #9c27b0; }
+
+.routine-code {
+  font-size: 0.65rem; /* Small font to fit narrow columns */
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+.routine-room {
+  font-size: 0.55rem;
+  opacity: 0.8;
+}
+

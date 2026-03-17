@@ -1,0 +1,72 @@
+.exam-resources-page h1 {
+  color: #333;
+  margin-bottom: 30px;
+}
+
+.exam-resources-list {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.exam-resource-card {
+  background: white;
+  border-radius: 10px;
+  padding: 25px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  border-left: 4px solid #764ba2;
+}
+
+.exam-resource-header {
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.exam-resource-header h2 {
+  margin: 0 0 10px;
+  color: #667eea;
+  font-size: 22px;
+}
+
+.exam-date {
+  font-size: 16px;
+  color: #333;
+  font-weight: 600;
+  margin: 5px 0;
+}
+
+.exam-time {
+  font-size: 14px;
+  color: #666;
+  margin: 5px 0;
+}
+
+.exam-venue {
+  font-size: 14px;
+  color: #666;
+  margin: 5px 0;
+}
+
+.exam-desc {
+  margin-top: 10px;
+  padding: 10px;
+  background: #f9f9f9;
+  border-radius: 5px;
+  font-style: italic;
+  color: #666;
+  font-size: 14px;
+}
+
+.exam-files-section h3 {
+  margin: 0 0 15px;
+  color: #333;
+  font-size: 18px;
+}
+
+.no-resources {
+  text-align: center;
+  padding: 60px 20px;
+  color: #999;
+  font-size: 18px;
+}
