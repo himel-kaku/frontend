@@ -40,6 +40,11 @@
   color: #999;
 }
 
+.file-actions {
+  display: flex;
+  gap: 10px;
+}
+
 .download-btn {
   background: #667eea;
   color: white;
@@ -54,6 +59,22 @@
 
 .download-btn:hover {
   background: #5568d3;
+}
+
+.delete-btn {
+  background: #dc3545;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  width: auto;
+}
+
+.delete-btn:hover {
+  background: #c82333;
 }
 
 .no-files {

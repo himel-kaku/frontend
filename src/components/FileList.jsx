@@ -3,7 +3,7 @@ import { useAuth } from '../context/AuthContext';
 import { api } from '../utils/api';
 import './FileList.css';
 
-const FileList = ({ files }) => {
+const FileList = ({ files, onDelete }) => {
   const { token } = useAuth();
 
   const handleDownload = async (fileId, fileName) => {
@@ -38,6 +38,29 @@ const FileList = ({ files }) => {
     }
   };
 
+  const handleDelete = async (fileId, fileName) => {
+    if (!window.confirm(`Are you sure you want to delete "${fileName}"?`)) {
+      return;
+    }
+
+    try {
+      console.log(`Starting delete for: ${fileId}`);
+      
+      await api.deleteFile(token, fileId);
+      
+      console.log("Delete complete.");
+      alert("File deleted successfully.");
+      
+      // Call the onDelete callback to refresh the file list
+      if (onDelete) {
+        onDelete(fileId);
+      }
+    } catch (error) {
+      console.error("Delete Error:", error.message);
+      alert("Failed to delete file. Please check your connection or permissions.");
+    }
+  };
+
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     return date.toLocaleString();
@@ -58,12 +81,20 @@ const FileList = ({ files }) => {
               <div className="file-date">Uploaded: {formatDate(file.uploaded_at)}</div>
             </div>
           </div>
-          <button
-            className="download-btn"
-            onClick={() => handleDownload(file.file_id, file.file_name)}
-          >
-            Download
-          </button>
+          <div className="file-actions">
+            <button
+              className="download-btn"
+              onClick={() => handleDownload(file.file_id, file.file_name)}
+            >
+              Download
+            </button>
+            <button
+              className="delete-btn"
+              onClick={() => handleDelete(file.file_id, file.file_name)}
+            >
+              Delete
+            </button>
+          </div>
         </div>
       ))}
     </div>

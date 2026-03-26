@@ -15,7 +15,7 @@ const CreateScheduleModal = ({ slotData, onClose, onSuccess }) => {
     end_time: slotData.endTime,
     building_name: '',
     room: '',
-    is_regular: false
+    is_regular: true
   });
 
   useEffect(() => {
@@ -110,7 +110,7 @@ const CreateScheduleModal = ({ slotData, onClose, onSuccess }) => {
 
           <div className="checkbox-group">
             <input type="checkbox" id="isRegularCreate" name="is_regular" checked={formData.is_regular} onChange={handleChange} />
-            <label htmlFor="isRegularCreate">Is Regular Class?</label>
+            <label htmlFor="isRegularCreate">Is Open Class?</label>
           </div>
 
           <div className="modal-actions">

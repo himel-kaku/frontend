@@ -33,6 +33,15 @@ const ClassMaterialsModal = ({ routine, onClose, canUpload }) => {
     fetchMaterials();
   };
 
+  const handleDeleteFile = (fileId) => {
+    setMaterials(prevMaterials => 
+      prevMaterials.map(material => ({
+        ...material,
+        files: material.files.filter(file => file.file_id !== fileId)
+      }))
+    );
+  };
+
   const handleUpdateSuccess = () => {
     setShowUpdate(false);
     // You might want to refresh the routine data here 
@@ -74,7 +83,7 @@ const ClassMaterialsModal = ({ routine, onClose, canUpload }) => {
                   </button>
                 )}
               </div>
-              <FileList files={materials.files} />
+              <FileList files={materials.files} onDelete={handleDeleteFile} />
             </>
           )}
         </div>

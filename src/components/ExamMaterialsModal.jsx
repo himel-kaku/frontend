@@ -33,6 +33,15 @@ const ExamMaterialsModal = ({ exam, onClose, canUpdate }) => {
     fetchMaterials();
   };
 
+  const handleDeleteFile = (fileId) => {
+    setMaterials(prevMaterials => 
+      prevMaterials.map(material => ({
+        ...material,
+        files: material.files.filter(file => file.file_id !== fileId)
+      }))
+    );
+  };
+
   const handleUpdateSuccess = () => {
     setShowUpdate(false);
     window.location.reload(); // Refresh to show new schedule details
@@ -68,13 +77,13 @@ const ExamMaterialsModal = ({ exam, onClose, canUpdate }) => {
             <>
               <div className="materials-header">
                 <h3>Exam Materials</h3>
-                {canUpdate && (
+                
                   <button className="upload-btn" onClick={() => setShowUpload(true)}>
                     Upload File
                   </button>
-                )}
+                
               </div>
-              <FileList files={materials.files} />
+              <FileList files={materials.files} onDelete={handleDeleteFile} />
             </>
           )}
         </div>

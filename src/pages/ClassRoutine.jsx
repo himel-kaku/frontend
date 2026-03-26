@@ -37,7 +37,7 @@ const ClassRoutine = () => {
   const handleRoutineClick = (routine) => {
     if (routine.isNew) {
       // Only CR can click empty slots to create
-      if (user?.studentRole === 'CR') {
+      if (user?.role === 'cr' || user?.role==='teacher') {
         setNewSlotData(routine);
         setShowCreateModal(true);
       }
@@ -55,13 +55,13 @@ const ClassRoutine = () => {
 
   return (
     <div className="class-routine-page">
-      <RoutineGrid routines={routines} onRoutineClick={handleRoutineClick} />
+      <RoutineGrid routines={routines} onRoutineClick={handleRoutineClick} isCR={user?.role === 'cr'} />
       
       {selectedRoutine && (
         <ClassMaterialsModal
           routine={selectedRoutine}
           onClose={handleCloseModal}
-          canUpload={user?.role === 'cr'}
+          canUpload={user?.role === 'cr' || user?.role === 'teacher'}
         />
       )}
 

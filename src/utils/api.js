@@ -127,6 +127,22 @@ export const api = {
     return await response.blob();
   },
 
+  // Delete
+  deleteFile: async (token, fileId) => {
+    const response = await fetch(`${API_BASE_URL}/api/delete/${fileId}`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error('Delete failed');
+    }
+
+    return await response.json();
+  },
+
 
 
   createClassSchedule: async (token, scheduleData) => {

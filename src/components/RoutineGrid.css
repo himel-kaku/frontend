@@ -70,6 +70,10 @@
   min-width: 0; /* Prevents overflow in narrow grids */
 }
 
+.routine-cell.cr-clickable {
+  cursor: pointer;
+}
+
 .routine-block {
   height: 100%;
   border-radius: 3px;

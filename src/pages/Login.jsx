@@ -43,7 +43,7 @@ const Login = () => {
         
         <form onSubmit={handleSubmit}>
           <div className="form-group">
-            <label>Student ID</label>
+            <label>User ID</label>
             <input
               type="number"
               value={id}
@@ -64,7 +64,7 @@ const Login = () => {
             />
           </div>
           
-          <button type="submit" disabled={loading}>
+          <button className="login-button" type="submit" disabled={loading}>
             {loading ? 'Logging in...' : 'Login'}
           </button>
         </form>

@@ -10,6 +10,8 @@ import ClassRoutine from './pages/ClassRoutine';
 import ExamRoutine from './pages/ExamRoutine';
 import ClassResources from './pages/ClassResources';
 import ExamResources from './pages/ExamResources';
+import CourseDetails from './pages/CourseDetails';
+
 
 function App() {
   return (
@@ -28,6 +30,7 @@ function App() {
             <Route path="/exam-routine" element={<ExamRoutine />} />
             <Route path="/class-resources" element={<ClassResources />} />
             <Route path="/exam-resources" element={<ExamResources />} />
+            <Route path="/course/:id" element={<CourseDetails />} />
           </Route>
 
           <Route path="*" element={<Navigate to="/" replace />} />

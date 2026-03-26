@@ -1,7 +1,7 @@
 import React from 'react';
 import './RoutineGrid.css';
 
-const RoutineGrid = ({ routines, onRoutineClick }) => {
+const RoutineGrid = ({ routines, onRoutineClick, isCR }) => {
   const getDates = () => {
     const dates = [];
     for (let i = 0; i < 7; i++) {
@@ -62,7 +62,7 @@ const RoutineGrid = ({ routines, onRoutineClick }) => {
               {timeSlots.map((timeSlot, tIdx) => (
                   <div 
                     key={tIdx} 
-                    className="routine-cell clickable-slot" 
+                    className={`routine-cell clickable-slot ${isCR ? 'cr-clickable' : ''}`}
                     onClick={() => {
                       const existingRoutines = getRoutineForSlot(date, timeSlot);
                       if (existingRoutines.length === 0) {

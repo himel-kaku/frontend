@@ -3,6 +3,12 @@
   margin-bottom: 30px;
 }
 
+.one-container{
+  margin-left: 25px;
+  margin-right: 25px;
+  margin-top: 0px;
+}
+
 .exam-resources-list {
   display: flex;
   flex-direction: column;
