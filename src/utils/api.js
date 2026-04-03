@@ -300,8 +300,12 @@ export const api = {
   },
 
   // Resources
-  getCourseMaterials: async (token, courseId) => {
-    const response = await fetch(`${API_BASE_URL}/api/user/course-materials/${courseId}`, {
+  getCourseMaterials: async (token, courseId, section = null) => {
+    const url = section
+      ? `${API_BASE_URL}/api/user/course-section-materials/${courseId}/${section}`
+      : `${API_BASE_URL}/api/user/course-materials/${courseId}`;
+
+    const response = await fetch(url, {
       headers: {
         'Authorization': `Bearer ${token}`
       }
@@ -309,8 +313,12 @@ export const api = {
     return response.json();
   },
 
-  getExamsCourseMaterials : async (token, courseId) => {
-    const response = await fetch(`${API_BASE_URL}/api/user//exam-course-materials/${courseId}`, {
+  getExamsCourseMaterials : async (token, courseId, section = null) => {
+    const url = section
+      ? `${API_BASE_URL}/api/user/exam-course-section-materials/${courseId}/${section}`
+      : `${API_BASE_URL}/api/user/exam-course-materials/${courseId}`;
+
+    const response = await fetch(url, {
       headers: {
         'Authorization': `Bearer ${token}`
       }

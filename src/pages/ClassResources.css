@@ -125,5 +125,65 @@
   margin-right: 12px;
 }
 
+/* Course grouping styles */
+.course-group {
+  padding: 8px;
+  cursor: pointer;
+  transition: all 0.3s;
+  border-bottom: 0.8px dashed rgb(203, 209, 208);
+  margin-bottom: 5px;
+}
+
+.course-group:hover {
+  background: #e1e1e1;
+}
+
+.course-group.active {
+  background: #9dc7c0;
+  color: white;
+}
+
+.course-group.active .course-group-header {
+  color: white;
+}
+
+.course-group-header {
+  margin-bottom: 8px;
+  color: #333;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.course-group-title {
+  margin: 0;
+  font-size: 14px;
+}
+
+.section-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.section-button {
+  background: #aeded6;
+  color: white;
+  border: none;
+  padding: 4px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 500;
+  transition: all 0.3s;
+}
+
+.section-button:hover {
+  background: #8bb8b0;
+}
+
+.section-button.active {
+  background: #1dc2a7;
+}
+
 
 
