@@ -3,6 +3,8 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
 import Layout from './components/Layout';
+import AdminRoute from './components/AdminRoute';
+import AdminPanel from './pages/AdminPanel';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import Courses from './pages/Courses';
@@ -20,11 +22,11 @@ function App() {
         <Routes>
           <Route path="/" element={<Login />} />
           
-          <Route element={
-            <ProtectedRoute>
-              <Layout />
-            </ProtectedRoute>
-          }>
+            <Route element={
+              <ProtectedRoute>
+                <Layout />
+              </ProtectedRoute>
+            }>
             <Route path="/courses" element={<Courses />} />
             <Route path="/class-routine" element={<ClassRoutine />} />
             <Route path="/exam-routine" element={<ExamRoutine />} />
@@ -33,6 +35,9 @@ function App() {
             <Route path="/course/:id" element={<CourseDetails />} />
           </Route>
 
+          <Route path="/admin" element={<AdminRoute><Layout /></AdminRoute>}>
+            <Route index element={<AdminPanel />} />
+          </Route>
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </BrowserRouter>

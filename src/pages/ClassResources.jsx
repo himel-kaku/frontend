@@ -1,132 +1,3 @@
-// import React, { useState, useEffect } from 'react';
-// import { useAuth } from '../context/AuthContext';
-// import { api } from '../utils/api';
-// import FileList from '../components/FileList';
-// import './ClassResources.css';
-
-// const ClassResources = ({ singleCourse }) => {
-//   const { token } = useAuth();
-//   const [courses, setCourses] = useState([]);
-//   const [selectedCourse, setSelectedCourse] = useState(null);
-//   const [materials, setMaterials] = useState([]);
-//   const [loading, setLoading] = useState(true);
-//   const [materialsLoading, setMaterialsLoading] = useState(false);
-//   const [error, setError] = useState('');
-
-//   useEffect(() => {
-//     if (singleCourse) {
-//       setCourses([singleCourse]);
-//       selectCourse(singleCourse);
-//       setLoading(false);
-//     } else {
-//       fetchCourses();
-//     }
-//   }, []);
-
-//   const fetchCourses = async () => {
-//     try {
-//       const data = await api.getMyCourses(token);
-//       setCourses(data.courses || []);
-//       if (data.courses && data.courses.length > 0) {
-//         selectCourse(data.courses[0]);
-//       }
-//     } catch (err) {
-//       setError('Failed to load courses');
-//     } finally {
-//       setLoading(false);
-//     }
-//   };
-
-//   const selectCourse = async (course) => {
-//     setSelectedCourse(course);
-//     setMaterialsLoading(true);
-//     try {
-//       const data = await api.getCourseMaterials(token, course.id);
-//       setMaterials(data.plots || []);
-//     } catch (err) {
-//       console.error('Failed to load materials');
-//     } finally {
-//       setMaterialsLoading(false);
-//     }
-//   };
-
-//   const groupMaterialsByDate = () => {
-//     const grouped = {}
-//     materials.forEach(material => {
-//       const date = material.date || 'Unknown Date';
-//       if (!grouped[date]) {
-//         grouped[date] = [];
-//       }
-//       grouped[date].push(...material.files);
-//     });
-//     return grouped;
-//   };
-
-//   const groupedMaterials = groupMaterialsByDate();
-//   const dates = Object.keys(groupedMaterials).sort().reverse();
-
-//   if (loading) return <div className="loading">Loading courses...</div>;
-//   if (error) return <div className="error">{error}</div>;
-
-//   return (
-//     <div className="class-resources-page">
-//       <h1>Class Resources</h1>
-      
-//       <div className={singleCourse? 'one-container':"resources-container"}>
-//         {!singleCourse && (
-//               <aside className="courses-sidebar">
-//                 <div className="my-courses-title">
-//                   <h3>My Courses</h3>
-//                 </div>
-//                 <div className="course-list">
-//                   {courses.map((course) => (
-//                     <div
-//                       key={course.id}
-//                       className={`course-item ${selectedCourse?.id === course.id ? 'active' : ''}`}
-//                       onClick={() => selectCourse(course)}
-//                     >
-//                       <div className="course-code">{course.code}</div>
-//                       <div className="course-name">{course.title}</div>
-//                     </div>
-//                   ))}
-//                 </div>
-//               </aside>
-//         )}
-        
-
-//         <div className="materials-panel">
-//           {selectedCourse && (
-//             <>
-//               <div className="panel-header">
-//                 <h2>{selectedCourse.code} - {selectedCourse.title}</h2>
-//               </div>
-
-//               {materialsLoading ? (
-//                 <div className="loading">Loading materials...</div>
-//               ) : dates.length > 0 ? (
-//                 <div className="materials-by-date">
-//                   {dates.map((date) => (
-//                     <div key={date} className="date-group">
-//                       <h3 className="date-label">{date}</h3>
-//                       <FileList files={groupedMaterials[date]} />
-//                     </div>
-//                   ))}
-//                 </div>
-//               ) : (
-//                 <div className="no-materials">No materials available for this course</div>
-//               )}
-//            </>
-//           )}
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default ClassResources;
-
-
-
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { api } from '../utils/api';
@@ -159,8 +30,9 @@ const ClassResources = ({ singleCourse }) => {
   const [uploadPlotId, setUploadPlotId] = useState(null);
 
   // ── Only CR can upload
-  const isCR = user?.studentRole?.toLowerCase() === 'cr'
+  const isEditor = user?.studentRole?.toLowerCase() === 'cr'
                || user?.role === 'teacher';
+  const isTeacher = user?.role === 'teacher';
 
   useEffect(() => {
     if (singleCourse) {
@@ -186,12 +58,25 @@ const ClassResources = ({ singleCourse }) => {
     }
   };
 
+  const isDateTodayOrPast = (dateStr) => {
+    if (!dateStr) return false;
+    const normalized = dateStr.includes('T') ? dateStr : `${dateStr}T00:00:00`;
+    const plotDate = new Date(normalized);
+    if (Number.isNaN(plotDate.getTime())) return false;
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    plotDate.setHours(0, 0, 0, 0);
+    return plotDate <= today;
+  };
+
   const selectCourse = async (course) => {
     setSelectedCourse(course);
     setMaterialsLoading(true);
     try {
       const data = await api.getCourseMaterials(token, course.id);
-      setMaterials(data.plots || []);
+      const plots = data.plots || [];
+      const filteredPlots = plots.filter((plot) => isDateTodayOrPast(plot.date));
+      setMaterials(filteredPlots);
     } catch (err) {
       console.error('Failed to load materials');
     } finally {
@@ -252,12 +137,13 @@ const ClassResources = ({ singleCourse }) => {
             <div className="course-list">
               {courses.map((course) => (
                 <div
-                  key={course.id}
+                  key={isTeacher ? `${course.id}-${course.section || ''}` : course.id}
                   className={`course-item ${selectedCourse?.id === course.id ? 'active' : ''}`}
                   onClick={() => selectCourse(course)}
                 >
                   <div className="course-code">{course.code}</div>
                   <div className="course-name">{course.title}</div>
+                  {isTeacher && <div className="course-section">Sec:{course.section}</div>}
                 </div>
               ))}
             </div>
@@ -281,7 +167,7 @@ const ClassResources = ({ singleCourse }) => {
                         <h3 className="date-label">{formatDateLabel(date)}</h3>
                         {/* ── Upload button shown per date group, only for CR.
                                Uses the plotId for that specific class date. */}
-                        {isCR && (
+                        {isEditor && (
                           <button
                             className="upload-btn"
                             onClick={() => handleUploadClick(groupedMaterials[date].plotId)}
@@ -302,7 +188,6 @@ const ClassResources = ({ singleCourse }) => {
         </div>
       </div>
 
-      {/* ── Reuses the same UploadModal component from ClassMaterialsModal */}
       {showUpload && (
         <UploadModal
           plotId={uploadPlotId}

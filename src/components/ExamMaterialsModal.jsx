@@ -34,17 +34,15 @@ const ExamMaterialsModal = ({ exam, onClose, canUpdate }) => {
   };
 
   const handleDeleteFile = (fileId) => {
-    setMaterials(prevMaterials => 
-      prevMaterials.map(material => ({
-        ...material,
-        files: material.files.filter(file => file.file_id !== fileId)
-      }))
-    );
+    setMaterials(prevMaterials => ({
+      ...prevMaterials,
+      files: prevMaterials.files.filter(file => file.file_id !== fileId)
+    }));
   };
-
+  
   const handleUpdateSuccess = () => {
     setShowUpdate(false);
-    window.location.reload(); // Refresh to show new schedule details
+    window.location.reload(); 
   };
 
   return (

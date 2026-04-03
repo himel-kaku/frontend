@@ -55,7 +55,7 @@ const ClassRoutine = () => {
 
   return (
     <div className="class-routine-page">
-      <RoutineGrid routines={routines} onRoutineClick={handleRoutineClick} isCR={user?.role === 'cr'} />
+      <RoutineGrid routines={routines} onRoutineClick={handleRoutineClick} isEditor={user?.role === 'cr'|| user?.role === 'teacher'} />
       
       {selectedRoutine && (
         <ClassMaterialsModal
@@ -73,6 +73,7 @@ const ClassRoutine = () => {
             setShowCreateModal(false);
             fetchClassRoutine(); // Refresh the grid
           }}
+          isTeacher={user?.role === 'teacher'}
         />
       )}
     </div>

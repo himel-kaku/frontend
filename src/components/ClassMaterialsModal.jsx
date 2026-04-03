@@ -13,14 +13,18 @@ const ClassMaterialsModal = ({ routine, onClose, canUpload }) => {
   const [showUpload, setShowUpload] = useState(false);
   const [showUpdate, setShowUpdate] = useState(false);
 
+  const isToday = routine.date.split('T')[0] === new Date().toISOString().split('T')[0];
+
   useEffect(() => {
     fetchMaterials();
   }, [routine]);
 
   const fetchMaterials = async () => {
     try {
-      const data = await api.getClassMaterials(token, routine.id);
-      setMaterials(data.plot || []);
+      if(isToday){
+        const data = await api.getClassMaterials(token, routine.id);
+        setMaterials(data.plot || []);
+      }
     } catch (err) {
       console.error('Failed to load materials');
     } finally {
@@ -34,18 +38,14 @@ const ClassMaterialsModal = ({ routine, onClose, canUpload }) => {
   };
 
   const handleDeleteFile = (fileId) => {
-    setMaterials(prevMaterials => 
-      prevMaterials.map(material => ({
-        ...material,
-        files: material.files.filter(file => file.file_id !== fileId)
-      }))
-    );
+    setMaterials(prevMaterials => ({
+      ...prevMaterials,
+      files: prevMaterials.files.filter(file => file.file_id !== fileId)
+    }));
   };
-
+  
   const handleUpdateSuccess = () => {
     setShowUpdate(false);
-    // You might want to refresh the routine data here 
-    // or trigger fetchClassRoutine in the parent
     window.location.reload(); 
   }
 
@@ -54,13 +54,12 @@ const ClassMaterialsModal = ({ routine, onClose, canUpload }) => {
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
         <div className="modal-header">
           <div>
-            <h2>{routine.courseCode} - {routine.courseTitle}</h2>
+            <h2>{routine.courseCode} - {routine.courseTitle}  [sec: {routine.section}]</h2>
             <p className="modal-info">
-              {routine.date.split('T')[0]} | {routine.startTime} - {routine.endTime} | {routine.location}
+              {routine.date.split('T')[0]} | {routine.startTime} - {routine.endTime} |  Building: {routine.building_name} | Room: {routine.room}
             </p>
           </div>
           <div className="header-actions">
-            {/* ADDED UPDATE BUTTON HERE */}
             {canUpload && (
               <button className="edit-schedule-btn" onClick={() => setShowUpdate(true)}>
                 Update Schedule
@@ -77,18 +76,24 @@ const ClassMaterialsModal = ({ routine, onClose, canUpload }) => {
             <>
               <div className="materials-header">
                 <h3>Class Materials</h3>
-                {canUpload && (
+                {canUpload && isToday && (
                   <button className="upload-btn" onClick={() => setShowUpload(true)}>
                     Upload File
                   </button>
                 )}
-              </div>
-              <FileList files={materials.files} onDelete={handleDeleteFile} />
+                {!isToday && !canUpload && (
+                   <>No files available</>
+                )}
+                {!isToday && canUpload && (
+                   <>You can upload only today's class files;</>
+                )}
+             </div>
+                {isToday && (
+                    <FileList files={materials.files} onDelete={handleDeleteFile} />
+                )}
             </>
           )}
         </div>
-
-      
 
         {showUpload && (
           <UploadModal

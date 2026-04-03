@@ -20,8 +20,7 @@ const FileList = ({ files, onDelete }) => {
       const link = document.createElement('a');
       link.href = url;
       
-      // Use the actual filename if you have it, 
-      // otherwise the browser uses the 'Content-Disposition' header if set
+      // Using the actual filename if you have it, 
       link.setAttribute('download', fileName || `file-${fileId}`); 
       
       // 4. Append, click, and cleanup
@@ -44,20 +43,13 @@ const FileList = ({ files, onDelete }) => {
     }
 
     try {
-      console.log(`Starting delete for: ${fileId}`);
-      
       await api.deleteFile(token, fileId);
-      
-      console.log("Delete complete.");
-      alert("File deleted successfully.");
-      
-      // Call the onDelete callback to refresh the file list
       if (onDelete) {
-        onDelete(fileId);
+        onDelete(fileId); // This already filters the file out in parent state
       }
     } catch (error) {
       console.error("Delete Error:", error.message);
-      alert("Failed to delete file. Please check your connection or permissions.");
+      alert("Failed to delete file.");
     }
   };
 

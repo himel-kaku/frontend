@@ -111,7 +111,7 @@ const UpdateScheduleModal = ({ routine, onClose, onSuccess }) => {
               checked={formData.is_regular} 
               onChange={handleChange} 
             />
-            <label htmlFor="isRegular">Is Regular Class?</label>
+            <label htmlFor="isRegular">Is Class Open?</label>
           </div>
 
           <div className="modal-actions">

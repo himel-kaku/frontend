@@ -3,7 +3,7 @@ import { api } from '../utils/api';
 import { useAuth } from '../context/AuthContext';
 import './UpdateScheduleModal.css'; 
 
-const CreateScheduleModal = ({ slotData, onClose, onSuccess }) => {
+const CreateScheduleModal = ({ slotData, onClose, onSuccess , isTeacher}) => {
   const { token } = useAuth();
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -32,20 +32,30 @@ const CreateScheduleModal = ({ slotData, onClose, onSuccess }) => {
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-    
+
     // If course is selected, auto-fill the section from the course data
-    if (name === "courseId") {
-        const selectedCourse = courses.find(c => c.id === parseInt(value));
-        setFormData(prev => ({ 
-            ...prev, 
-            course_id: value, 
-            section: selectedCourse ? selectedCourse.section : '' 
-        }));
-    } else {
+    if (name === 'courseId') {
+      if (isTeacher) {
+        // value is encoded as id-section for teachers
+        const [courseId, courseSection] = value.split('-');
         setFormData(prev => ({
-            ...prev,
-            [name]: type === 'checkbox' ? checked : value
+          ...prev,
+          course_id: courseId,
+          section: courseSection || ''
         }));
+      } else {
+        const selectedCourse = courses.find(c => c.id === parseInt(value));
+        setFormData(prev => ({
+          ...prev,
+          course_id: value,
+          section: selectedCourse ? selectedCourse.section : ''
+        }));
+      }
+    } else {
+      setFormData(prev => ({
+        ...prev,
+        [name]: type === 'checkbox' ? checked : value
+      }));
     }
   };
 
@@ -71,10 +81,15 @@ const CreateScheduleModal = ({ slotData, onClose, onSuccess }) => {
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label>Select Course</label>
-            <select name="courseId" value={formData.course_id} onChange={handleChange} required>
+            <select name="courseId" value={isTeacher ? `${formData.course_id}-${formData.section}` : formData.course_id} onChange={handleChange} required>
               <option value="">-- Choose Course --</option>
-              {courses.map(c => (
-                <option key={c.id} value={c.id}> {c.code} </option>
+              {!isTeacher && courses.map(c => (
+                <option key={c.id} value={c.id}>{c.code} - {c.title}</option>
+              ))}
+              {isTeacher && courses.map(c => (
+                <option key={`${c.id}-${c.section}`} value={`${c.id}-${c.section}`}>
+                  {c.code} - {c.title} [sec: {c.section}]
+                </option>
               ))}
             </select>
           </div>

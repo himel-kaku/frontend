@@ -1,11 +1,14 @@
 import React from 'react';
 import './ExamCard.css';
 
-const ExamCard = ({ exam, onClick }) => {
+const ExamCard = ({ exam, onClick, isTeacher }) => {
   return (
     <div className="exam-card" onClick={onClick}>
       <div className="exam-card-header">
-        <h3>{exam.courseCode}</h3>
+        <h3>
+          {exam.courseCode}
+          {isTeacher && exam.section ? ` (sec: ${exam.section})` : ''}
+        </h3>
         <span className="exam-time">ExamTime: {exam.startTime} - {exam.endTime}</span>
       </div>
       <h4>{exam.courseTitle}</h4>

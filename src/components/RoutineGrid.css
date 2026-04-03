@@ -1,13 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&display=swap');
+
 .routine-container-fixed {
-  /* Fits your requirement: width: calc(100vw - 280px) and full height */
-  width: calc(100vw - 310px); 
+  width: calc(100vw - 310px);
   height: 90vh;
-  background: #fff;
-  overflow: hidden; /* Removes both scrollbars */
+  background: #f5f6fa;
+  /* overflow: hidden; */
   display: flex;
   flex-direction: column;
-  padding: 2px;
+  padding: 12px;
   box-sizing: border-box;
+  font-family: 'DM Sans', sans-serif;
 }
 
 .routine-grid {
@@ -15,88 +17,134 @@
   height: 100%;
   display: flex;
   flex-direction: column;
-  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid #e4e6ef;
+  background: #fff;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
 }
 
-.grid-header, .grid-row {
+.grid-header,
+.grid-row {
   display: grid;
-  /* Fixed width for Day column, fluid for Time columns */
-  grid-template-columns: 75px repeat(10, 1fr); 
-  flex: 1; /* Makes rows expand to fill container height */
+  grid-template-columns: 75px repeat(10, 1fr);
+  flex: 1;
 }
 
 .grid-header {
-  background-color: #f8f9fa;
-  font-size: 0.75rem;
-  max-height: 40px; /* Keeps header small */
+  background: #fafbff;
+  font-size: 0.68rem;
+  max-height: 38px;
+  flex: 0 0 38px;
+  border-bottom: 2px solid #e4e6ef;
 }
 
-.corner-label, .time-header {
+.corner-label,
+.time-header {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: bold;
-  border-right: 1px solid #eee;
-  border-bottom: 2px solid #dee2e6;
-  text-align: center;
+  font-weight: 600;
+  font-size: 0.65rem;
+  color: #6b7280;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  border-right: 1px solid #e9ebf5;
 }
 
 .date-cell {
-  background-color: #fcfcfc;
+  background: #fafbff;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border-right: 2px solid #dee2e6;
-  border-bottom: 1px solid #eee;
+  border-right: 2px solid #e4e6ef;
+  border-bottom: 1px solid #eef0f8;
+  gap: 1px;
 }
 
 .day-name {
   font-weight: 700;
-  font-size: 0.7rem;
+  font-size: 0.65rem;
+  color: #374151;
+  letter-spacing: 0.05em;
 }
 
 .date-sub {
-  font-size: 0.6rem;
-  color: #999;
+  font-size: 0.58rem;
+  color: #9ca3af;
+  font-weight: 400;
 }
 
 .routine-cell {
-  border-right: 1px solid #f0f0f0;
-  border-bottom: 1px solid #f0f0f0;
-  padding: 2px;
+  border-right: 1px solid #eef0f8;
+  border-bottom: 1px solid #eef0f8;
+  padding: 3px 4px;
   display: flex;
   flex-direction: column;
-  min-width: 0; /* Prevents overflow in narrow grids */
+  gap: 2px;
+  min-width: 0;
+  background: #fff;
+  transition: background 0.15s ease;
 }
 
 .routine-cell.cr-clickable {
   cursor: pointer;
 }
 
+.routine-cell.cr-clickable:hover {
+  background: #f8f9ff;
+}
+
+/* ── Routine Block ─────────────────────────────── */
 .routine-block {
   height: 100%;
-  border-radius: 3px;
-  color: white;
+  border-radius: 6px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   cursor: pointer;
   overflow: hidden;
+  padding: 4px 6px;
+  position: relative;
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+  border-left: 3px solid transparent;
 }
 
-.routine-block.theory { background-color: #4caf50; }
-.routine-block.sessional { background-color: #9c27b0; }
+.routine-block:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Theory — cool teal-green */
+.routine-block.theory {
+  background: #edfaf3;
+  border-left-color: #10b981;
+}
+
+/* Sessional — soft violet */
+.routine-block.sessional {
+  background: #f3eeff;
+  border-left-color: #7c3aed;
+}
 
 .routine-code {
-  font-size: 0.65rem; /* Small font to fit narrow columns */
-  font-weight: bold;
+  font-size: 0.63rem;
+  font-weight: 700;
   white-space: nowrap;
+  letter-spacing: 0.02em;
 }
+
+.routine-block.theory .routine-code  { color: #065f46; }
+.routine-block.sessional .routine-code { color: #4c1d95; }
 
 .routine-room {
-  font-size: 0.55rem;
-  opacity: 0.8;
+  font-size: 0.53rem;
+  font-weight: 500;
+  margin-top: 1px;
+  opacity: 0.75;
 }
 
+.routine-block.theory .routine-room  { color: #047857; }
+.routine-block.sessional .routine-room { color: #6d28d9; }

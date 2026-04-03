@@ -22,7 +22,8 @@ const Login = () => {
       
       if (data.success) {
         login(data.token, data.user);
-        navigate('/courses');
+        const nextPath = data.user?.role?.toLowerCase() === 'admin' ? '/admin' : '/courses';
+        navigate(nextPath);
       } else {
         setError(data.message || 'Login failed');
       }

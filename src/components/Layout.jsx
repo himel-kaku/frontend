@@ -22,9 +22,15 @@ const Layout = () => {
           <div className="profile-details">
             <p><strong>Name :</strong> {user?.name}</p>
             <p><strong>ID   :</strong> {user?.id}</p>
-            <p><strong>Dept :</strong> {user?.departmentCode}</p>
-            <p><strong>Level:</strong> {user?.level}</p>
-            <p><strong>Term :</strong> {user?.term}</p>
+            <p><strong>Role :</strong> {user?.role}</p>
+            {user?.departmentCode && <p><strong>Dept :</strong> {user?.departmentCode}</p>}
+            { (user?.studentRole === 'cr' || user?.studentRole === 'CR') && (
+                <>
+                      <p><strong>Level:</strong> {user?.level}</p>
+                      <p><strong>Term :</strong> {user?.term}</p>
+                </>
+            )}
+
             { (user?.studentRole === 'cr' || user?.studentRole === 'CR') && (
               <p className="cr-badge">Class Representative</p>
             )}
@@ -34,25 +40,32 @@ const Layout = () => {
           </button>
         </div>
         <nav className="navigation">
-          {/* <div className="navigation-title">
-            <h3>Navigation</h3>
-          </div> */}
           <div className="navigation-bar">
-              <NavLink to="/courses" className={({ isActive }) => isActive ? 'active' : ''}>
-                Courses
-              </NavLink>
-              <NavLink to="/class-routine" className={({ isActive }) => isActive ? 'active' : ''}>
-                Class Routine
-              </NavLink>
-              <NavLink to="/exam-routine" className={({ isActive }) => isActive ? 'active' : ''}>
-                Exam Routine
-              </NavLink>
-              <NavLink to="/class-resources" className={({ isActive }) => isActive ? 'active' : ''}>
-                Class Resources
-              </NavLink>
-              <NavLink to="/exam-resources" className={({ isActive }) => isActive ? 'active' : ''}>
-                Exam Resources
-              </NavLink>
+            {user?.role?.toLowerCase() === 'admin' ? (
+              <>
+                <NavLink to="/admin" className={({ isActive }) => isActive ? 'active' : ''}>
+                  Admin Panel
+                </NavLink>
+              </>
+            ) : (
+              <>
+                <NavLink to="/courses" className={({ isActive }) => isActive ? 'active' : ''}>
+                  Courses
+                </NavLink>
+                <NavLink to="/class-routine" className={({ isActive }) => isActive ? 'active' : ''}>
+                  Class Routine
+                </NavLink>
+                <NavLink to="/exam-routine" className={({ isActive }) => isActive ? 'active' : ''}>
+                  Exam Routine
+                </NavLink>
+                <NavLink to="/class-resources" className={({ isActive }) => isActive ? 'active' : ''}>
+                  Class Resources
+                </NavLink>
+                <NavLink to="/exam-resources" className={({ isActive }) => isActive ? 'active' : ''}>
+                  Exam Resources
+                </NavLink>
+              </>
+            )}
           </div>
         </nav>
       </aside>

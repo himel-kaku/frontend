@@ -20,6 +20,213 @@ export const api = {
         'Authorization': `Bearer ${token}`
       }
     });
+    // console.log('getMyCourses response:', response);
+    return response.json();
+  },
+
+  // Admin: Create student/teacher/course and assign, filter and update
+  createStudent: async (token, studentData) => {
+    const response = await fetch(`${API_BASE_URL}/api/admin/create-student`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify(studentData)
+    });
+    return response.json();
+  },
+
+  createTeacher: async (token, teacherData) => {
+    const response = await fetch(`${API_BASE_URL}/api/admin/create-teacher`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify(teacherData)
+    });
+    return response.json();
+  },
+
+  createCourse: async (token, courseData) => {
+    const response = await fetch(`${API_BASE_URL}/api/admin/create-course`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify(courseData)
+    });
+    return response.json();
+  },
+
+  createDepartment: async (token, departmentData) => {
+    const response = await fetch(`${API_BASE_URL}/api/admin/create-department`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify(departmentData)
+    });
+    return response.json();
+  },
+
+  assignCourseToStudent: async (token, assignmentData) => {
+    const response = await fetch(`${API_BASE_URL}/api/admin/assign-course-student`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify(assignmentData)
+    });
+    return response.json();
+  },
+
+  assignCourseToTeacher: async (token, assignmentData) => {
+    const response = await fetch(`${API_BASE_URL}/api/admin/assign-course-teacher`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify(assignmentData)
+    });
+    return response.json();
+  },
+
+  getStudents: async (token, filters = {}) => {
+    const params = new URLSearchParams(filters);
+    const response = await fetch(`${API_BASE_URL}/api/admin/students?${params.toString()}`, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+    return response.json();
+  },
+
+  getTeachers: async (token, filters = {}) => {
+    const params = new URLSearchParams(filters);
+    const response = await fetch(`${API_BASE_URL}/api/admin/teachers?${params.toString()}`, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+    return response.json();
+  },
+
+  getCourses: async (token, filters = {}) => {
+    const params = new URLSearchParams(filters);
+    // console.log('Fetching courses with filters:', params.toString());
+    const response = await fetch(`${API_BASE_URL}/api/admin/courses?${params.toString()}`, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+    return response.json();
+  },
+
+  getDepartments: async (token) => {
+    const response = await fetch(`${API_BASE_URL}/api/admin/departments`, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+    return response.json();
+  },
+
+  getStudentById: async (token, studentId) => {
+    const response = await fetch(`${API_BASE_URL}/api/admin/students/${studentId}`, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+    return response.json();
+  },
+
+  getTeacherById: async (token, teacherId) => {
+    const response = await fetch(`${API_BASE_URL}/api/admin/teachers/${teacherId}`, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+    return response.json();
+  },
+
+  getCourseById: async (token, courseId) => {
+    const response = await fetch(`${API_BASE_URL}/api/admin/courses/${courseId}`, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+    return response.json();
+  },
+
+  updateStudent: async (token, studentId, updateData) => {
+    const response = await fetch(`${API_BASE_URL}/api/admin/students/${studentId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify(updateData)
+    });
+    return response.json();
+  },
+
+  updateTeacher: async (token, teacherId, updateData) => {
+    const response = await fetch(`${API_BASE_URL}/api/admin/teachers/${teacherId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify(updateData)
+    });
+    return response.json();
+  },
+
+  updateCourse: async (token, courseId, updateData) => {
+    const response = await fetch(`${API_BASE_URL}/api/admin/courses/${courseId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify(updateData)
+    });
+    return response.json();
+  },
+
+  deleteStudent: async (token, studentId) => {
+    const response = await fetch(`${API_BASE_URL}/api/admin/students/${studentId}`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+    return response.json();
+  },
+
+  deleteTeacher: async (token, teacherId) => {
+    const response = await fetch(`${API_BASE_URL}/api/admin/teachers/${teacherId}`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+    return response.json();
+  },
+
+  deleteCourse: async (token, courseId) => {
+    const response = await fetch(`${API_BASE_URL}/api/admin/courses/${courseId}`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
     return response.json();
   },
 
